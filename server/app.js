@@ -12,8 +12,7 @@ const cors = require("cors");
 var app = express();
 
 // Import Routers
-// var indexRouter = require("./routes/index");
-// var catalogRouter = require("./routes/catalog");
+var indexRouter = require("./routes/index");
 
 mongoose.plugin(castAggregation);
 mongoose.set("toJSON", { virtuals: true });
@@ -43,7 +42,6 @@ app.use(express.static(path.join(__dirname, "public")));
 
 // ROUTES
 // app.use("/", indexRouter);
-// app.use("/", catalogRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
