@@ -18,11 +18,6 @@ const OrderItemSchema = new Schema(
       required: true,
     },
     image: String,
-    status: {
-      type: String,
-      required: true,
-      enum: ["in progress", "on its way", "delivered"],
-    },
   },
   {
     timestamps: true,
