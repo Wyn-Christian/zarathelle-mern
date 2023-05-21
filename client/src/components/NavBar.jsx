@@ -74,7 +74,7 @@ const ClientNavBar = () => {
             </Link>
           </Box>
 
-          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
+          <Box sx={{ flexGrow: 1, display: "flex" }}>
             <Link
               to="/"
               style={{ textDecoration: "none", colro: "inherit" }}
@@ -165,7 +165,7 @@ const ClientNavBar = () => {
               </Box>
             </Menu>
           </Box>
-          <Box sx={{ display: { xs: "none", md: "flex" } }}>
+          <Box sx={{ display: "flex" }}>
             <NavItemLink to="/login" title="Login" />
             <NavItemLink to="/sign-up" title="Sign Up" />
           </Box>
