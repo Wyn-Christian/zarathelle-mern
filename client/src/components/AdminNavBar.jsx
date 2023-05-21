@@ -144,7 +144,7 @@ const AdminNavBar = () => {
           </IconButton>
           <Box>
             <Link
-              to="/"
+              to="/admin"
               style={{
                 textDecoration: "none",
                 color: "inherit",
