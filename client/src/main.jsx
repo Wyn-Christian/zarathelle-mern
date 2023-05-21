@@ -16,6 +16,11 @@ import Login from "./routes/client/Login.jsx";
 import SignUp from "./routes/client/SignUp.jsx";
 import ProductList from "./routes/client/ProductList.jsx";
 import Product from "./routes/client/Product.jsx";
+import CartItems from "./routes/client/CartItems.jsx";
+import Orders from "./routes/client/Orders.jsx";
+import UserProfile from "./routes/client/UserProfile.jsx";
+import Dashboard from "./routes/admin/Dashboard.jsx";
+import AdminRoot from "./routes/admin/AdminRoot.jsx";
 
 const router = createBrowserRouter([
   {
@@ -49,6 +54,61 @@ const router = createBrowserRouter([
           {
             path: "/sign-up",
             element: <SignUp />,
+          },
+          {
+            path: "/user",
+            children: [
+              {
+                index: true,
+                element: <UserProfile />,
+              },
+              {
+                path: "cart-items",
+                element: <CartItems />,
+              },
+              {
+                path: "orders",
+                element: <Orders />,
+              },
+            ],
+          },
+          {
+            path: "/admin",
+            element: <AdminRoot />,
+            children: [
+              {
+                index: true,
+                element: <Dashboard />,
+              },
+              {
+                path: "customers/list",
+                element: <h1>Customers List </h1>,
+              },
+              {
+                path: "customers/create",
+                element: <h1>Customers Create </h1>,
+              },
+              {
+                path: "collections/list",
+                element: <h1>Collections List</h1>,
+              },
+              {
+                path: "collections/create",
+                element: <h1>Collections Create </h1>,
+              },
+              {
+                path: "products/list",
+                element: <h1>Products List</h1>,
+              },
+              {
+                path: "products/create",
+                element: <h1>Products Create </h1>,
+              },
+              {
+                path: "orders",
+                element: <h1>Order List</h1>,
+              },
+            ],
           },
         ],
       },
