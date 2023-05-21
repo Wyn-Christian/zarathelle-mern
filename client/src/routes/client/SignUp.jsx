@@ -1,3 +1,4 @@
+import Grid from "@mui/material/Unstable_Grid2";
 import {
   Box,
   Button,
@@ -6,7 +7,6 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import Grid from "@mui/material/Unstable_Grid2";
 
 function SignUp() {
   return (
