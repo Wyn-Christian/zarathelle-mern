@@ -9,9 +9,7 @@ function Root() {
     <Box>
       <CssBaseline />
       <NavBar />
-      <Box mt={10.5}>
-        <Outlet />
-      </Box>
+      <Outlet />
     </Box>
   );
 }
