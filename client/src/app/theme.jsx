@@ -5,6 +5,9 @@ let theme = createTheme({
     primary: {
       main: "#fbd5d5",
     },
+    secondary: {
+      main: "#e78686",
+    },
   },
 });
 
