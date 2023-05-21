@@ -14,7 +14,7 @@ const CartItemSchema = new Schema(
       ref: "product",
     },
     quantity: {
-      type: String,
+      type: Number,
       default: 1,
     },
     image: String,
