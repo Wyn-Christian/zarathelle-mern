@@ -14,7 +14,7 @@ const ProductSchema = new Schema(
       required: true,
       enum: ["ready made", "customizable"],
     },
-    collection: {
+    collection_id: {
       type: mongoose.Types.ObjectId,
       required: true,
       ref: "collection",
@@ -55,6 +55,9 @@ const NumSoldProductSchema = new Schema(
     },
   }
 );
-const NumSoldProduct = mongoose.model("num-sold-product", NumSoldProductSchema);
+const NumSoldProduct = mongoose.model(
+  "num-sold-product",
+  NumSoldProductSchema
+);
 
 module.exports = { Product, NumSoldProduct };
