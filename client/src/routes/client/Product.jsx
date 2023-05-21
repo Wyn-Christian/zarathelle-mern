@@ -52,10 +52,13 @@ function Product() {
               mt: 3,
               display: "flex",
               flexDirection: "column",
+              justifyContent: "space-between",
             }}
           >
             <Box>
-              <Typography variant="h3">Product Title</Typography>
+              <Typography variant="h4" fontWeight="bold">
+                Product Title
+              </Typography>
               <Typography variant="h6">Type: Product Type</Typography>
               <Typography variant="h6">Stocks: 100</Typography>
               <Typography variant="body2">Product Description</Typography>
