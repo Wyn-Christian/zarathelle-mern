@@ -1,8 +1,16 @@
-import { Box, Button, Paper, TextField, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  Paper,
+  TextField,
+  Typography,
+  useTheme,
+} from "@mui/material";
 import Footer from "../../components/Footer";
 import { Link } from "react-router-dom";
 
 function Login() {
+  const theme = useTheme();
   return (
     <Box height="100vh">
       <Box
@@ -64,7 +72,10 @@ function Login() {
                   <Box
                     component={Link}
                     to="/sign-up"
-                    sx={{ textDecoration: "none", color: "#e78686" }}
+                    sx={{
+                      textDecoration: "none",
+                      color: theme.palette.secondary.main,
+                    }}
                   >
                     Create an account
                   </Box>
