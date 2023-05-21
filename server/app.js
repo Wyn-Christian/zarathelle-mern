@@ -41,7 +41,7 @@ app.use(compression());
 app.use(express.static(path.join(__dirname, "public")));
 
 // ROUTES
-// app.use("/", indexRouter);
+app.use("/", indexRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
@@ -55,7 +55,9 @@ app.use(function (err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
-  res.json("error");
+  res.json({
+    message: err.message,
+  });
 });
 
 module.exports = app;
