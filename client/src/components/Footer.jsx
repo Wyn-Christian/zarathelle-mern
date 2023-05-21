@@ -18,7 +18,6 @@ const TikTokIcon = ({ color = "#000000" }) => {
     </svg>
   );
 };
-const socmedlinks = ["facebook", "instagram", "tiktok", "shopee"];
 
 function Footer() {
   const theme = useTheme();
