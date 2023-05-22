@@ -1,22 +1,15 @@
 // Libraries
-import { Link, useLocation } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { useState } from "react";
 
 // MUI Components
 import AppBar from "@mui/material/AppBar";
 import {
   Box,
-  Button,
-  Container,
   IconButton,
   Toolbar,
-  Tooltip,
-  Avatar,
-  Menu,
-  MenuItem,
   Typography,
   Divider,
-  Badge,
   List,
   ListItem,
   ListItemButton,
