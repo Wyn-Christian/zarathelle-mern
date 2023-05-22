@@ -21,6 +21,18 @@ import Orders from "./routes/client/Orders.jsx";
 import UserProfile from "./routes/client/UserProfile.jsx";
 import Dashboard from "./routes/admin/Dashboard.jsx";
 import AdminRoot from "./routes/admin/AdminRoot.jsx";
+import CustomersCreate from "./routes/admin/customers/CustomersCreate.jsx";
+import ProductsCreate from "./routes/admin/products/ProductsCreate.jsx";
+import CollectionsCreate from "./routes/admin/collections/CollectionsCreate.jsx";
+import CustomersList from "./routes/admin/customers/CustomersList.jsx";
+import CustomersDetail from "./routes/admin/customers/CustomersDetail.jsx";
+import CustomersUpdate from "./routes/admin/customers/CustomersUpdate.jsx";
+import CollectionsList from "./routes/admin/collections/CollectionsList.jsx";
+import CollectionsDetail from "./routes/admin/collections/CollectionsDetail.jsx";
+import CollectionsUpdate from "./routes/admin/collections/CollectionsUpdate.jsx";
+import ProductsList from "./routes/admin/products/ProductsList.jsx";
+import ProductsDetail from "./routes/admin/products/ProductsDetail.jsx";
+import ProductsUpdate from "./routes/admin/products/ProductsUpdate.jsx";
 
 const router = createBrowserRouter([
   {
@@ -81,28 +93,67 @@ const router = createBrowserRouter([
                 element: <Dashboard />,
               },
               {
-                path: "customers/list",
-                element: <h1>Customers List </h1>,
+                path: "customers",
+                children: [
+                  {
+                    path: "list",
+                    element: <CustomersList />,
+                  },
+                  {
+                    path: ":id",
+                    element: <CustomersDetail />,
+                  },
+                  {
+                    path: ":id/update",
+                    element: <CustomersUpdate />,
+                  },
+                  {
+                    path: "create",
+                    element: <CustomersCreate />,
+                  },
+                ],
               },
               {
-                path: "customers/create",
-                element: <h1>Customers Create </h1>,
+                path: "collections",
+                children: [
+                  {
+                    path: "list",
+                    element: <CollectionsList />,
+                  },
+                  {
+                    path: ":id",
+                    element: <CollectionsDetail />,
+                  },
+                  {
+                    path: ":id/update",
+                    element: <CollectionsUpdate />,
+                  },
+                  {
+                    path: "create",
+                    element: <CollectionsCreate />,
+                  },
+                ],
               },
               {
-                path: "collections/list",
-                element: <h1>Collections List</h1>,
-              },
-              {
-                path: "collections/create",
-                element: <h1>Collections Create </h1>,
-              },
-              {
-                path: "products/list",
-                element: <h1>Products List</h1>,
-              },
-              {
-                path: "products/create",
-                element: <h1>Products Create </h1>,
+                path: "products",
+                children: [
+                  {
+                    path: "list",
+                    element: <ProductsList />,
+                  },
+                  {
+                    path: ":id",
+                    element: <ProductsDetail />,
+                  },
+                  {
+                    path: ":id/update",
+                    element: <ProductsUpdate />,
+                  },
+                  {
+                    path: "create",
+                    element: <ProductsCreate />,
+                  },
+                ],
               },
               {
                 path: "orders",
