@@ -21,6 +21,7 @@ const ProductCard = ({ title, description }) => (
     sx={{
       display: "flex",
       flexDirection: "column",
+      alignItems: "center",
     }}
   >
     <Card
