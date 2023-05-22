@@ -11,7 +11,7 @@ import {
 
 function SignUp() {
   return (
-    <Box display="flex" flexDirection="column" alignItems="center">
+    <Box display="flex" flexDirection="column" alignItems="center" mb={10}>
       <Toolbar />
       <Typography textAlign="center" sx={{ pt: 10, mb: 3 }} variant="h3">
         Create an account
