@@ -32,23 +32,29 @@ function Product() {
         }}
       />
 
-      <Container sx={{ minHeight: "20vh " }}>
+      <Container sx={{ minHeight: "20vh" }}>
         <Box
           sx={{
             display: "flex",
             justifyContent: "center",
             mt: 10,
+            flexDirection: { xs: "column", md: "row" },
+            alignItems: { xs: "center", md: "space-between" },
           }}
         >
-          <Card>
+          <Card sx={{ width: { xs: 208, md: 418 } }}>
             <CardMedia
-              sx={{ height: 400, width: 400, m: 1.1 }}
+              sx={{
+                height: { xs: 190, md: 400 },
+                width: { xs: 190, md: 400 },
+                m: 1.1,
+              }}
               image={`/images/sample/product.jpg`}
             />
           </Card>
           <Box
             sx={{
-              ml: 4,
+              ml: { md: 4 },
               mt: 3,
               display: "flex",
               flexDirection: "column",
