@@ -33,6 +33,8 @@ import CollectionsUpdate from "./routes/admin/collections/CollectionsUpdate.jsx"
 import ProductsList from "./routes/admin/products/ProductsList.jsx";
 import ProductsDetail from "./routes/admin/products/ProductsDetail.jsx";
 import ProductsUpdate from "./routes/admin/products/ProductsUpdate.jsx";
+import OrdersList from "./routes/admin/orders/OrdersList.jsx";
+import OrdersDetail from "./routes/admin/orders/OrdersDetail.jsx";
 
 const router = createBrowserRouter([
   {
@@ -157,7 +159,16 @@ const router = createBrowserRouter([
               },
               {
                 path: "orders",
-                element: <h1>Order List</h1>,
+                children: [
+                  {
+                    index: true,
+                    element: <OrdersList />,
+                  },
+                  {
+                    path: ":id",
+                    element: <OrdersDetail />,
+                  },
+                ],
               },
             ],
           },
