@@ -64,14 +64,6 @@ function ProductsCreate() {
               />
             </Grid>
             <Grid xs={12} md={6}>
-              <TextField
-                label="Stocks"
-                name="stocks"
-                type="number"
-                fullWidth
-              />
-            </Grid>
-            <Grid xs={12} md={6}>
               <MuiFileInput
                 value={file}
                 onChange={handleChange}
