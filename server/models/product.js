@@ -38,6 +38,10 @@ const ProductSchema = new Schema(
     timestamps: true,
   }
 );
+ProductSchema.virtual("image_url").get(function () {
+  return `/images/products/${this.image}`;
+});
+
 const Product = mongoose.model("product", ProductSchema);
 
 const NumSoldProductSchema = new Schema(
