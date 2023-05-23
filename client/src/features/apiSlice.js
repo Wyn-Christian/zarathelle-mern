@@ -86,6 +86,7 @@ export const apiSlice = createApi({
         method: "POST",
         body: data,
       }),
+      invalidatesTags: ["User"],
     }),
     getUsers: builder.query({
       query: () => "/users",
@@ -98,6 +99,7 @@ export const apiSlice = createApi({
       query: (id) => `/user/${id}`,
       providesTags: (result, error, arg) => [{ type: "User", id: arg }],
     }),
+
     updateUser: builder.mutation({
       query: ({ id, user }) => ({
         url: `/user/${id}/update`,
