@@ -38,4 +38,8 @@ const UserSchema = new Schema(
   }
 );
 
+UserSchema.virtual("image_url").get(function () {
+  return `/images/users/${this.image}`;
+});
+
 module.exports = mongoose.model("user", UserSchema);
