@@ -57,8 +57,8 @@ const OrderItem = () => (
     >
       <Box sx={{ display: "flex", flexDirection: "column", flexGrow: 2 }}>
         <Typography fontWeight="bold" sx={{ maxWidth: 375 }}>
-          Product Title Product Title Product Title Product Title Product
-          Title Product Title
+          Product Title Product Title Product Title Product Title Product Title
+          Product Title
         </Typography>
         <Typography>Type</Typography>
       </Box>
@@ -94,9 +94,7 @@ const OrderItems = () => {
         <Box>
           <Chip color="primary" label="To Process" />
         </Box>
-        <Button sx={{ color: theme.palette.secondary.main }}>
-          Cancel
-        </Button>
+        <Button sx={{ color: theme.palette.secondary.main }}>Cancel</Button>
       </Box>
       <Divider />
       <Box sx={{ p: "10px 20px" }}>
@@ -130,6 +128,7 @@ function OrdersDetail() {
             <Info title="Full Name" value="User Full Name Sample" />
             <Info title="Email" value="sample@gmail.com" />
             <Info title="Phone" value="09214765154 gcash huehue" />
+            <Info title="Address" value="Sa puso mo" />
           </Paper>
         </Grid>
         <Grid xs={12} md={6}>
