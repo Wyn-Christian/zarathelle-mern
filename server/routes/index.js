@@ -49,10 +49,14 @@ router.post(
   user_services.signup
 );
 router.post("/user/signup-admin", user_services.signup_admin);
-router.post("/user/:id/update", user_services.update);
+router.post(
+  "/user/:id/update",
+  upload_user.single("image"),
+  user_services.update
+);
 router.post("/user/:id/delete", user_services.delete);
 router.get("/user/:id", user_services.detail);
-router.get("/users", user_services.list);
+router.get("/users", user_services.list_users);
 
 // // Collection Routes
 router.post(
