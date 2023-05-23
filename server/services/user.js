@@ -8,6 +8,14 @@ exports.list = (req, res, next) => {
       next(err);
     });
 };
+exports.list_users = (req, res, next) => {
+  User.find({ position: "user" })
+    .then((result) => res.json(result))
+    .catch((err) => {
+      console.log(err);
+      next(err);
+    });
+};
 
 exports.detail = (req, res, next) => {
   User.findById(req.params.id)
@@ -32,9 +40,6 @@ exports.login = async (req, res, next) => {
 };
 
 exports.signup = (req, res, next) => {
-  console.log(req.file);
-  console.log(req.body);
-
   const {
     username,
     first_name,
@@ -95,6 +100,7 @@ exports.update = (req, res, next) => {
     phone,
     email,
   } = req.body);
+  console.log("Customers data", req.body);
 
   if (req.body.password) {
     user.password = req.body.password;
