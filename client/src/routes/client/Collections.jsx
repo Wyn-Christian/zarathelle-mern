@@ -11,8 +11,12 @@ import {
 import Footer from "../../components/Footer";
 import Grid from "@mui/material/Unstable_Grid2";
 import { Link } from "react-router-dom";
+import { useGetCollectionsQuery } from "../../features/apiSlice";
+import { useEffect } from "react";
 
-const CollectionCard = ({ id, image, title, description, price }) => (
+const api_base_url = import.meta.env.VITE_SERVER_URI;
+
+const CollectionCard = ({ id, image, title, description }) => (
   <Grid
     xs={12}
     sm={6}
@@ -51,7 +55,7 @@ const CollectionCard = ({ id, image, title, description, price }) => (
         <CardMedia
           sx={{ height: 200, width: { xs: "100%", md: 200 } }}
           alt="collection sample"
-          image={`/images/sample/${image}`}
+          image={`${api_base_url}/images/collections/${image}`}
         />
         <CardContent>
           <Typography variant="h5" component="div">
@@ -87,6 +91,14 @@ const CollectionCard = ({ id, image, title, description, price }) => (
 );
 
 function Collections() {
+  const {
+    data: collections = [],
+    isLoading,
+    isSuccess,
+    isError,
+    error,
+  } = useGetCollectionsQuery();
+
   return (
     <Box>
       <Box
@@ -115,22 +127,15 @@ function Collections() {
           Collections
         </Typography>
         <Grid container spacing={3} mt={5}>
-          <CollectionCard
-            id={0}
-            image={"collection.jpg"}
-            title={"Sample Title  Sample Title Sample Title"}
-            description={"sample description"}
-            price={100}
-          />
-          <CollectionCard
-            id={1}
-            image={"collection.jpg"}
-            title={"Sample Title  Sample Title Sample Title"}
-            description={
-              "sample description sample description sample description sample description sample description "
-            }
-            price={100}
-          />
+          {collections.map((collection) => (
+            <CollectionCard
+              key={collection.id}
+              id={collection.id}
+              image={collection.image}
+              title={collection.title}
+              description={collection.description}
+            />
+          ))}
         </Grid>
       </Container>
       <Footer />

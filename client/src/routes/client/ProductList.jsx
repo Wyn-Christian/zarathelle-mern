@@ -12,8 +12,13 @@ import {
 import { Link, useParams } from "react-router-dom";
 import Footer from "../../components/Footer";
 import Grid from "@mui/material/Unstable_Grid2";
+import {
+  useGetCollectionQuery,
+  useGetProductsOfCollectionQuery,
+} from "../../features/apiSlice";
+import { api_base_url } from "../../app/base_url";
 
-const ProductCard = ({ title, description }) => (
+const ProductCard = ({ id, name, description, image_url }) => (
   <Grid
     xs={12}
     sm={6}
@@ -34,13 +39,13 @@ const ProductCard = ({ title, description }) => (
         justifyContent: "space-between",
       }}
     >
-      <CardActionArea LinkComponent={Link} to={`/product/123`}>
+      <CardActionArea LinkComponent={Link} to={`/product/${id}`}>
         <CardMedia
           sx={{ height: 300 }}
-          image="/images/sample/product.jpg"
+          image={`${api_base_url}${image_url}`}
         />
         <CardContent sx={{ textAlign: "center" }}>
-          <Typography variant="h5">{title}</Typography>
+          <Typography variant="h5">{name}</Typography>
           <Typography variant="body2">{description}</Typography>
         </CardContent>
       </CardActionArea>
@@ -67,6 +72,26 @@ const ProductCard = ({ title, description }) => (
 
 function ProductList() {
   const { id } = useParams();
+
+  const {
+    data: collection = {
+      title: "",
+      description: "",
+      image: "",
+      category: "",
+    },
+    isFetching,
+    isSuccess,
+  } = useGetCollectionQuery(id);
+
+  const {
+    data: products = [],
+    isLoading,
+    isSuccess: isProductsSuccess,
+    isError,
+    error,
+  } = useGetProductsOfCollectionQuery(id);
+
   return (
     <Box>
       <Box
@@ -116,7 +141,7 @@ function ProductList() {
               />
             </Card>
             <Box ml={3} mt={4}>
-              <Typography variant="h4">Sample Collection Title</Typography>
+              <Typography variant="h4">{collection.title}</Typography>
               <Typography variant="body1">
                 Sample Collection Description
               </Typography>
@@ -127,27 +152,13 @@ function ProductList() {
       <Container
         sx={{
           mt: 3,
+          minHeight: "20vh",
         }}
       >
         <Grid container spacing={3}>
-          <ProductCard
-            title={"Sample Title"}
-            description={"Sample Description"}
-          />
-          <ProductCard
-            title={"Sample Title"}
-            description={"Sample Description"}
-          />
-          <ProductCard
-            title={"Sample Title"}
-            description={
-              "Sample Description Sample Description Sample Description Sample Description Sample Description Sample Description"
-            }
-          />
-          <ProductCard
-            title={"Sample Title"}
-            description={"Sample Description"}
-          />
+          {products.map((product) => (
+            <ProductCard key={product.id} {...product} />
+          ))}
         </Grid>
       </Container>
       <Footer />
