@@ -27,7 +27,7 @@ const OrderSchema = new Schema(
     status: {
       type: String,
       required: true,
-      enum: ["to progress", "on its way", "delivered"],
+      enum: ["to progress", "on its way", "delivered", "cancelled"],
       default: "in progress",
     },
   },
