@@ -9,6 +9,8 @@ import {
 import { DataGrid } from "@mui/x-data-grid";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { useGetCollectionsQuery } from "../../../features/apiSlice";
+import { api_base_url } from "../../../app/base_url";
 
 const generateCollectionData = (num) => ({
   id: num,
@@ -26,10 +28,14 @@ const collectionSampleData = [
   generateCollectionData(5),
   generateCollectionData(6),
 ];
+
 const ImageColumn = ({ row }) => {
   return (
     <Paper sx={{ m: "auto" }}>
-      <CardMedia image={row.image} sx={{ height: 60, width: 60 }} />
+      <CardMedia
+        image={`${api_base_url}${row.image_url}`}
+        sx={{ height: 60, width: 60 }}
+      />
     </Paper>
   );
 };
@@ -82,13 +88,15 @@ const columns = [
 ];
 
 function CollectionsList() {
+  const { data: collections = [] } = useGetCollectionsQuery();
+
   return (
     <Box>
       <Typography variant="h4">List of Collections</Typography>
       <Box sx={{ mt: 3 }}>
         <DataGrid
           rowHeight={100}
-          rows={collectionSampleData}
+          rows={collections}
           columns={columns}
           pageSizeOptions={[5, 10, 25]}
           initialState={{

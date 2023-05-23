@@ -9,6 +9,8 @@ import {
 import { DataGrid } from "@mui/x-data-grid";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { useGetProductsQuery } from "../../../features/apiSlice";
+import { api_base_url } from "../../../app/base_url";
 
 const generateProductData = (num) => ({
   id: num,
@@ -35,7 +37,10 @@ const productSampleData = [
 const ImageColumn = ({ row }) => {
   return (
     <Paper sx={{ m: "auto" }}>
-      <CardMedia image={row.image} sx={{ height: 60, width: 60 }} />
+      <CardMedia
+        image={`${api_base_url}${row.image_url}`}
+        sx={{ height: 60, width: 60 }}
+      />
     </Paper>
   );
 };
@@ -95,13 +100,14 @@ const columns = [
 ];
 
 function ProductsList() {
+  const { data: products = [] } = useGetProductsQuery();
   return (
     <Box>
       <Typography variant="h4">List of Products</Typography>
       <Box sx={{ mt: 3 }}>
         <DataGrid
           rowHeight={100}
-          rows={productSampleData}
+          rows={products}
           columns={columns}
           pageSizeOptions={[5, 10, 25]}
           initialState={{

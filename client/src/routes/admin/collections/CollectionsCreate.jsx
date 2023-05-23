@@ -1,4 +1,6 @@
-import { useState } from "react";
+import { useFormik } from "formik";
+
+// MUI Components
 import Grid from "@mui/material/Unstable_Grid2";
 import {
   Box,
@@ -13,13 +15,34 @@ import {
 } from "@mui/material";
 import { MuiFileInput } from "mui-file-input";
 
+import { useCreateCollectionMutation } from "../../../features/apiSlice";
+
 function CollectionsCreate() {
-  const [category, setCategory] = useState("ready made");
+  const [createCollection, { data, isSuccess }] =
+    useCreateCollectionMutation();
 
-  const [file, setFile] = useState(null);
+  const formik = useFormik({
+    initialValues: {
+      title: "",
+      description: "",
+      category: "ready made",
+      image: null,
+    },
+  });
 
-  const handleChange = (newFile) => {
-    setFile(newFile);
+  const onSubmit = async () => {
+    const new_collection = new FormData();
+    new_collection.append("title", formik.values.title);
+    new_collection.append("description", formik.values.description);
+    new_collection.append("category", formik.values.category);
+    new_collection.append("image", formik.values.image);
+
+    await createCollection(new_collection)
+      .unwrap()
+      .then((res) => console.log("Create Collection Successfully", res))
+      .catch((err) => console.error(err));
+
+    formik.resetForm();
   };
 
   return (
@@ -29,7 +52,13 @@ function CollectionsCreate() {
         <Paper sx={{ p: 3, mt: 3 }} elevation={3}>
           <Grid container spacing={3}>
             <Grid xs={12} md={6}>
-              <TextField label="Collection Title" name="title" fullWidth />
+              <TextField
+                label="Collection Title"
+                name="title"
+                value={formik.values.title}
+                onChange={formik.handleChange}
+                fullWidth
+              />
             </Grid>
             <Grid xs={12} md={6}>
               <FormControl fullWidth>
@@ -37,37 +66,40 @@ function CollectionsCreate() {
                 <Select
                   fullWidth
                   labelId="category-id"
-                  value={category}
+                  value={formik.values.category}
                   label="Category"
                   name="category"
-                  onChange={(e) => setCategory(e.target.value)}
+                  onChange={formik.handleChange}
                 >
                   <MenuItem value={"ready made"}>Ready Made</MenuItem>
                   <MenuItem value={"customizable"}>Customizable</MenuItem>
                 </Select>
               </FormControl>
-            </Grid>{" "}
+            </Grid>
             <Grid xs={12} md={6}>
               <MuiFileInput
-                value={file}
-                onChange={handleChange}
+                name="image"
+                value={formik.values.image}
+                onChange={(e) => formik.setFieldValue("image", e)}
                 placeholder="Insert an image"
               />
             </Grid>
             <Grid xs={12}>
               <TextField
                 label="Description"
-                rows={3}
                 name="description"
+                value={formik.values.description}
+                onChange={formik.handleChange}
+                rows={3}
                 fullWidth
                 multiline
               />
             </Grid>
             <Grid xs={12}>
               <Button
-                type="submit"
                 variant="contained"
                 sx={{ width: { xs: "100%", md: 200 } }}
+                onClick={onSubmit}
               >
                 Add Collection
               </Button>
