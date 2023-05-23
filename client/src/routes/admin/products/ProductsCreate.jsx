@@ -19,8 +19,10 @@ import {
   useCreateProductMutation,
   useGetCollectionsQuery,
 } from "../../../features/apiSlice";
+import { useNavigate } from "react-router-dom";
 
 function ProductsCreate() {
+  const navigate = useNavigate();
   const { data: collections = [] } = useGetCollectionsQuery();
   const [createProduct, { data }] = useCreateProductMutation();
 
@@ -56,10 +58,11 @@ function ProductsCreate() {
 
     await createProduct(new_product)
       .unwrap()
-      .then((res) => console.log("Create Product Successfully", res))
+      .then((res) => {
+        console.log("Create Product Successfully", res);
+        navigate(`/admin/products/${res.id}`);
+      })
       .catch((err) => console.error(err));
-
-    formik.resetForm();
   };
 
   return (
