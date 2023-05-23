@@ -6,11 +6,52 @@ import {
   Typography,
   useTheme,
 } from "@mui/material";
-import Footer from "../../components/Footer";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useFormik } from "formik";
+import { useLoginUserMutation } from "../../features/apiSlice";
+import { setUser, userSelector } from "../../features/usersSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
 
 function Login() {
   const theme = useTheme();
+  const [loginUser, { data, isSuccess }] = useLoginUserMutation();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const formik = useFormik({
+    initialValues: {
+      email: "",
+      password: "",
+    },
+  });
+
+  const onSubmit = async () => {
+    console.log(formik.values);
+    await loginUser(formik.values);
+    // if (isSuccess) {
+    //   if (data.id) {
+    //     console.log("success", data);
+    //     dispatch(setUser(data));
+    //     console.log("user redux", user);
+    //   } else {
+    //     console.log(data.error);
+    //   }
+    // }
+  };
+
+  useEffect(() => {
+    if (data) {
+      console.log("use effect");
+      if (data.id) {
+        dispatch(setUser(data));
+        navigate("/");
+      } else {
+        console.log(data.error);
+      }
+    }
+  }, [data]);
+
   return (
     <Box height="100vh">
       <Box
@@ -46,11 +87,20 @@ function Login() {
               Login to your Account
             </Typography>
             <Box component="form" sx={{ width: "100%" }}>
-              <TextField label="email" fullWidth />
+              <TextField
+                label="email"
+                name="email"
+                value={formik.values.email}
+                onChange={formik.handleChange}
+                fullWidth
+              />
               <TextField
                 sx={{ mt: 2 }}
                 type="password"
                 label="password"
+                name="password"
+                value={formik.values.password}
+                onChange={formik.handleChange}
                 fullWidth
               />
               <Box
@@ -64,6 +114,7 @@ function Login() {
                 <Button
                   variant="contained"
                   sx={{ width: { xs: "100%", md: 100 } }}
+                  onClick={onSubmit}
                 >
                   Login
                 </Button>
