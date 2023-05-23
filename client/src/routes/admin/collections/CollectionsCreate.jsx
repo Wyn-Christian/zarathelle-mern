@@ -16,8 +16,10 @@ import {
 import { MuiFileInput } from "mui-file-input";
 
 import { useCreateCollectionMutation } from "../../../features/apiSlice";
+import { useNavigate } from "react-router-dom";
 
 function CollectionsCreate() {
+  const navigate = useNavigate();
   const [createCollection, { data, isSuccess }] =
     useCreateCollectionMutation();
 
@@ -39,10 +41,12 @@ function CollectionsCreate() {
 
     await createCollection(new_collection)
       .unwrap()
-      .then((res) => console.log("Create Collection Successfully", res))
-      .catch((err) => console.error(err));
+      .then((res) => {
+        console.log("Create Collection Successfully", res);
+        navigate(`/admin/collections/${res.id}`);
+      })
 
-    formik.resetForm();
+      .catch((err) => console.error(err));
   };
 
   return (
