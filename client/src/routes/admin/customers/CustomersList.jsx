@@ -1,7 +1,16 @@
-import { Box, Button, CardMedia, Paper, Typography } from "@mui/material";
+import {
+  Avatar,
+  Box,
+  Button,
+  CardMedia,
+  Paper,
+  Typography,
+} from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { useGetUsersQuery } from "../../../features/apiSlice";
+import { api_base_url } from "../../../app/base_url";
 
 const generateUserData = (num) => ({
   id: num,
@@ -22,9 +31,11 @@ const userSampleData = [
 ];
 const ImageColumn = ({ row }) => {
   return (
-    <Paper>
-      <CardMedia image={row.image} sx={{ height: 60, width: 60 }} />
-    </Paper>
+    <Avatar
+      src={`${api_base_url}${row.image_url}`}
+      alt={row.username}
+      sx={{ width: 56, height: 56, m: "auto" }}
+    />
   );
 };
 const CountButton = ({ params }) => {
@@ -44,8 +55,10 @@ const CountButton = ({ params }) => {
 const columns = [
   {
     field: "image",
-    headerName: "Image",
-    width: 90,
+    headerName: "Profile Pic",
+    width: 100,
+    headerAlign: "center",
+
     renderCell: (params) => <ImageColumn {...params} />,
   },
   { field: "username", headerName: "User Name", width: 150 },
@@ -61,16 +74,14 @@ const columns = [
 ];
 
 function CustomersList() {
-  useEffect(() => {
-    console.log(userSampleData);
-  });
+  const { data: users = [] } = useGetUsersQuery();
   return (
     <Box>
       <Typography variant="h4">List of Customers</Typography>
       <Box sx={{ mt: 3 }}>
         <DataGrid
           rowHeight={100}
-          rows={userSampleData}
+          rows={users}
           columns={columns}
           pageSizeOptions={[5, 10, 25]}
           initialState={{
