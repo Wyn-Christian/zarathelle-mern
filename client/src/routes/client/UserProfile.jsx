@@ -35,7 +35,7 @@ function UserProfile() {
           },
         }}
       />
-      <Container sx={{ minHeight: "10vh" }}>
+      <Container sx={{ minHeight: "20vh" }}>
         <Typography variant="h2" textAlign="center" sx={{ mt: 3 }}>
           Profile
         </Typography>
