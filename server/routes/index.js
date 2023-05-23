@@ -67,6 +67,10 @@ router.post(
 );
 router.post("/collection/:id/delete", collection_services.delete);
 router.get("/collection/:id", collection_services.detail);
+router.get(
+  "/collection/:id/products",
+  collection_services.list_product_by_collection
+);
 router.get("/collections", collection_services.list);
 
 // Product Routes
