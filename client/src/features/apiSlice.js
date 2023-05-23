@@ -3,8 +3,9 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 export const apiSlice = createApi({
   reducerPath: "api",
   baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:4000" }),
-  tagTypes: ["Collection", "Product", "Cart", "Customer"],
+  tagTypes: ["Collection", "Product", "Cart", "User"],
   endpoints: (builder) => ({
+    // Collections endpoints
     getCollections: builder.query({
       query: () => "/collections",
       providesTags: (result = [], error, arg) => [
@@ -21,24 +22,6 @@ export const apiSlice = createApi({
     getProductsOfCollection: builder.query({
       query: (id) => `/collection/${id}/products`,
     }),
-    getProducts: builder.query({
-      query: () => `/products`,
-      providesTags: (result = [], error, arg) => [
-        "Product",
-        ...result.map(({ id }) => ({ type: "Product", id })),
-      ],
-    }),
-    getProduct: builder.query({
-      query: (id) => `/product/${id}`,
-      providesTags: (result, error, arg) => [{ type: "Product", id: arg }],
-    }),
-    loginUser: builder.mutation({
-      query: (input) => ({
-        url: "/user/login",
-        method: "POST",
-        body: input,
-      }),
-    }),
     createCollection: builder.mutation({
       query: (data) => ({
         url: "/collection/create",
@@ -46,14 +29,6 @@ export const apiSlice = createApi({
         body: data,
       }),
       invalidatesTags: ["Collection"],
-    }),
-    createProduct: builder.mutation({
-      query: (data) => ({
-        url: "/product/create",
-        method: "POST",
-        body: data,
-      }),
-      invalidatesTags: ["Product"],
     }),
     updateCollection: builder.mutation({
       query: ({ id, collection }) => ({
@@ -65,6 +40,27 @@ export const apiSlice = createApi({
         { type: "Collection", id: arg.id },
       ],
     }),
+
+    // Products endpoints
+    getProducts: builder.query({
+      query: () => `/products`,
+      providesTags: (result = [], error, arg) => [
+        "Product",
+        ...result.map(({ id }) => ({ type: "Product", id })),
+      ],
+    }),
+    getProduct: builder.query({
+      query: (id) => `/product/${id}`,
+      providesTags: (result, error, arg) => [{ type: "Product", id: arg }],
+    }),
+    createProduct: builder.mutation({
+      query: (data) => ({
+        url: "/product/create",
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["Product"],
+    }),
     updateProduct: builder.mutation({
       query: ({ id, product }) => ({
         url: `/product/${id}/update`,
@@ -73,6 +69,43 @@ export const apiSlice = createApi({
       }),
       invalidatesTags: (result, error, arg) => [
         { type: "Product", id: arg.id },
+      ],
+    }),
+
+    // Users endpoints
+    loginUser: builder.mutation({
+      query: (input) => ({
+        url: "/user/login",
+        method: "POST",
+        body: input,
+      }),
+    }),
+    signUpUser: builder.mutation({
+      query: (data) => ({
+        url: `/user/signup`,
+        method: "POST",
+        body: data,
+      }),
+    }),
+    getUsers: builder.query({
+      query: () => "/users",
+      providesTags: (result = [], error, arg) => [
+        "User",
+        ...result.map(({ id }) => ({ type: "User", id })),
+      ],
+    }),
+    getUser: builder.query({
+      query: (id) => `/user/${id}`,
+      providesTags: (result, error, arg) => [{ type: "User", id: arg }],
+    }),
+    updateUser: builder.mutation({
+      query: ({ id, user }) => ({
+        url: `/user/${id}/update`,
+        method: "POST",
+        body: user,
+      }),
+      invalidatesTags: (result, error, arg) => [
+        { type: "User", id: arg.id },
       ],
     }),
   }),
@@ -84,9 +117,13 @@ export const {
   useGetProductsOfCollectionQuery,
   useGetProductsQuery,
   useGetProductQuery,
-  useLoginUserMutation,
   useCreateCollectionMutation,
   useCreateProductMutation,
   useUpdateCollectionMutation,
   useUpdateProductMutation,
+  useLoginUserMutation,
+  useSignUpUserMutation,
+  useGetUsersQuery,
+  useGetUserQuery,
+  useUpdateUserMutation,
 } = apiSlice;
