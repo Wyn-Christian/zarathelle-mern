@@ -19,4 +19,8 @@ const CollectionSchema = new Schema(
     timestamps: true,
   }
 );
+
+CollectionSchema.virtual("image_url").get(function () {
+  return `/images/collections/${this.image}`;
+});
 module.exports = mongoose.model("collection", CollectionSchema);
