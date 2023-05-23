@@ -1,6 +1,7 @@
 // Libraries
 import { Link, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 // MUI Components
 import AppBar from "@mui/material/AppBar";
@@ -29,6 +30,7 @@ import MailIcon from "@mui/icons-material/Mail";
 import MenuIcon from "@mui/icons-material/Menu";
 import InboxIcon from "@mui/icons-material/MoveToInbox";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import { removeUser, userSelector } from "../features/usersSlice";
 
 const NavItemLink = ({ to, title }) => (
   <Box
@@ -47,10 +49,14 @@ const ClientNavBar = () => {
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
   };
-
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
+
+  const user = useSelector(userSelector);
+
+  const dispatch = useDispatch();
+
   return (
     <AppBar>
       <Container>
@@ -93,82 +99,86 @@ const ClientNavBar = () => {
             </Link>
           </Box>
 
-          <Box sx={{ display: "flex" }}>
-            <IconButton
-              size="large"
-              color="inherit"
-              LinkComponent={Link}
-              to="/user/cart-items"
-            >
-              <Badge badgeContent={4} color="error">
-                <ShoppingCartIcon />
-              </Badge>
-            </IconButton>
-            <Tooltip title="Open settings">
+          {user.id ? (
+            <Box sx={{ display: "flex" }}>
               <IconButton
-                sx={{ p: 0, ml: 1 }}
-                onClick={handleOpenUserMenu}
+                size="large"
+                color="inherit"
+                LinkComponent={Link}
+                to="/user/cart-items"
               >
-                <Avatar
-                  alt="avatar sample"
-                  src="/images/zarathelle-logo.png"
-                />
+                <Badge badgeContent={4} color="error">
+                  <ShoppingCartIcon />
+                </Badge>
               </IconButton>
-            </Tooltip>
-            <Menu
-              sx={{ mt: "50px" }}
-              anchorEl={anchorElUser}
-              keepMounted
-              anchorOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
-            >
-              <Box
-                component={Link}
-                to="/user"
-                sx={{ textDecoration: "none", color: "inherit" }}
-              >
-                <MenuItem
-                  onClick={handleCloseUserMenu}
-                  sx={{ pr: 8 }}
-                  LinkComponent={Link}
-                  to="/user"
+              <Tooltip title="Open settings">
+                <IconButton
+                  sx={{ p: 0, ml: 1 }}
+                  onClick={handleOpenUserMenu}
                 >
-                  <Typography textAlign="center">Profile</Typography>
-                </MenuItem>
-              </Box>
-              <Box
-                component={Link}
-                to="/user/orders"
-                sx={{ textDecoration: "none", color: "inherit" }}
+                  <Avatar
+                    alt="avatar sample"
+                    src="/images/zarathelle-logo.png"
+                  />
+                </IconButton>
+              </Tooltip>
+              <Menu
+                sx={{ mt: "50px" }}
+                anchorEl={anchorElUser}
+                keepMounted
+                anchorOrigin={{
+                  vertical: "top",
+                  horizontal: "right",
+                }}
+                transformOrigin={{
+                  vertical: "top",
+                  horizontal: "right",
+                }}
+                open={Boolean(anchorElUser)}
+                onClose={handleCloseUserMenu}
               >
-                <MenuItem onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">Orders</Typography>
-                </MenuItem>
-              </Box>
-              <Divider />
-              <Box
-                component={Link}
-                to="/login"
-                sx={{ textDecoration: "none", color: "inherit" }}
-              >
-                <MenuItem onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">Log-out</Typography>
-                </MenuItem>
-              </Box>
-            </Menu>
-          </Box>
-          <Box sx={{ display: "flex" }}>
-            <NavItemLink to="/login" title="Login" />
-            <NavItemLink to="/sign-up" title="Sign Up" />
-          </Box>
+                <Box
+                  component={Link}
+                  to="/user"
+                  sx={{ textDecoration: "none", color: "inherit" }}
+                >
+                  <MenuItem
+                    onClick={handleCloseUserMenu}
+                    sx={{ pr: 8 }}
+                    LinkComponent={Link}
+                    to="/user"
+                  >
+                    <Typography textAlign="center">Profile</Typography>
+                  </MenuItem>
+                </Box>
+                <Box
+                  component={Link}
+                  to="/user/orders"
+                  sx={{ textDecoration: "none", color: "inherit" }}
+                >
+                  <MenuItem onClick={handleCloseUserMenu}>
+                    <Typography textAlign="center">Orders</Typography>
+                  </MenuItem>
+                </Box>
+                <Divider />
+                <Box
+                  component={Link}
+                  to="/login"
+                  onClick={() => dispatch(removeUser())}
+                  sx={{ textDecoration: "none", color: "inherit" }}
+                >
+                  <MenuItem onClick={handleCloseUserMenu}>
+                    <Typography textAlign="center">Log-out</Typography>
+                  </MenuItem>
+                </Box>
+              </Menu>
+            </Box>
+          ) : (
+            <Box sx={{ display: "flex" }}>
+              <NavItemLink to="/login" title="Login" />
+              <NavItemLink to="/sign-up" title="Sign Up" />
+            </Box>
+          )}
         </Toolbar>
       </Container>
     </AppBar>
