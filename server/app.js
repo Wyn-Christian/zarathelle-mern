@@ -18,8 +18,11 @@ mongoose.plugin(castAggregation);
 mongoose.set("toJSON", { virtuals: true });
 mongoose.set("strictQuery", false);
 
+const mongodb_uri =
+  "mongodb+srv://admin:1234@school-cluster.g7im8ww.mongodb.net/zarathelle?retryWrites=true&w=majority";
+
 mongoose
-  .connect(process.env.MONGODB_URI, {
+  .connect(process.env.MONGODB_URI || mongodb_uri, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
