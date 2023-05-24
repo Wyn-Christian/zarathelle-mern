@@ -69,16 +69,16 @@ exports.update = (req, res, next) => {
 };
 
 exports.delete = (req, res, next) => {
-  CartItem.findByIdAndDelete(req.params.id).then((result) => {
-    console.log("Delete Cart Item Successfully", result);
-    res
-      .json({
+  CartItem.findByIdAndDelete(req.params.id)
+    .then((result) => {
+      console.log("Delete Cart Item Successfully", result);
+      res.json({
         message: "Delete Successfully",
         result,
-      })
-      .catch((err) => {
-        console.log(err);
-        next(err);
       });
-  });
+    })
+    .catch((err) => {
+      console.log(err);
+      next(err);
+    });
 };
