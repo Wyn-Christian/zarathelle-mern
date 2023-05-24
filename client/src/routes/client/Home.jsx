@@ -12,8 +12,12 @@ import Grid from "@mui/material/Unstable_Grid2";
 import Footer from "../../components/Footer";
 import { Link } from "react-router-dom";
 import { useTheme } from "@mui/material/styles";
+import { useGetProductsQuery } from "../../features/apiSlice";
+import LoadingProgress from "../../components/LoadingProgress";
+import { api_base_url } from "../../app/base_url";
+import { PHPPrice } from "../../app/priceFormatter";
 
-const CollectionCard = ({ id, image, title, description, price }) => {
+const CollectionCard = ({ id, image_url, name, description, price }) => {
   const theme = useTheme();
   return (
     <Grid xs={12} sm={8} md={4}>
@@ -23,24 +27,26 @@ const CollectionCard = ({ id, image, title, description, price }) => {
           flexDirection: "column",
           height: "100%",
           justifyContent: "space-between",
+          width: { xs: 260, sm: 270, md: 280, lg: 300 },
+          m: "auto",
         }}
       >
         <Box>
           <CardMedia
             sx={{ height: 200 }}
-            alt="collection sample"
-            image={`/images/sample/${image}`}
+            alt={name}
+            image={`${api_base_url}${image_url}`}
           />
           <CardContent>
             <Typography variant="h5" component="div">
-              {title}
+              {name}
             </Typography>
             <Typography variant="body2">{description}</Typography>
           </CardContent>
         </Box>
         <CardActions sx={{ ml: 4, mr: 5 }}>
           <Typography sx={{ flexGrow: 1 }} fontWeight="bold">
-            ₱{price}
+            {PHPPrice.format(price)}
           </Typography>
           <Button
             size="small"
@@ -53,7 +59,7 @@ const CollectionCard = ({ id, image, title, description, price }) => {
           >
             <Box
               component={Link}
-              to={`/collections/${id}`}
+              to={`/product/${id}`}
               sx={{ textDecoration: "none", color: "inherit" }}
             >
               Order Now
@@ -66,6 +72,31 @@ const CollectionCard = ({ id, image, title, description, price }) => {
 };
 
 function Home() {
+  const {
+    data: products = [],
+    isLoading,
+    isSuccess,
+  } = useGetProductsQuery();
+
+  let content;
+  if (isLoading) {
+    content = <LoadingProgress />;
+  } else if (isSuccess) {
+    content = (
+      <Container>
+        <Box textAlign="center" mt={6}>
+          <Typography variant="h4">Our Best Selling</Typography>
+          <Typography variant="h6">Handmade With Love</Typography>
+        </Box>
+        <Grid container spacing={3} mt={5} justifyContent="center">
+          {products.slice(0, 3).map((product) => (
+            <CollectionCard key={product.id} {...product} />
+          ))}
+        </Grid>
+      </Container>
+    );
+  }
+
   return (
     <Box>
       <Box
@@ -108,35 +139,7 @@ function Home() {
           </Typography>
         </Box>
       </Box>
-      <Container>
-        <Box textAlign="center" mt={6}>
-          <Typography variant="h4">Our Best Selling</Typography>
-          <Typography variant="h6">Handmade With Love</Typography>
-        </Box>
-        <Grid container spacing={3} mt={5} justifyContent="center">
-          <CollectionCard
-            id={12}
-            image={"collection.jpg"}
-            title={"Sample Title"}
-            description={"sample description"}
-            price={100}
-          />
-          <CollectionCard
-            id={12}
-            image={"collection.jpg"}
-            title={"Sample Title"}
-            description={`"Choose to live for the moments that make your soul glow." Introducing our Glow in the Dark Line Art Necklace made specially for you? Available in Rectangle and Square Pendants!`}
-            price={100}
-          />
-          <CollectionCard
-            id={12}
-            image={"collection.jpg"}
-            title={"Sample Title"}
-            description={`"The destination is not everything. So before you reach the end, keep your eyes open. Use the chance to take in the world around you..." Introducing our first ever Genshin Impact inspired necklaces made specially for you.`}
-            price={100}
-          />
-        </Grid>
-      </Container>
+      {content}
       <Footer />
     </Box>
   );
