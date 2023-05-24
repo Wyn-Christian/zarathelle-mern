@@ -222,6 +222,7 @@ function CartItems() {
             sx={{ mt: 3, width: 150 }}
             size="large"
             onClick={checkOutClicked}
+            disabled={cart_items.length === 0}
           >
             CHECKOUT
           </Button>
