@@ -24,7 +24,7 @@ import { useNavigate } from "react-router-dom";
 function ProductsCreate() {
   const navigate = useNavigate();
   const { data: collections = [] } = useGetCollectionsQuery();
-  const [createProduct, { data }] = useCreateProductMutation();
+  const [createProduct] = useCreateProductMutation();
 
   const formik = useFormik({
     initialValues: {
