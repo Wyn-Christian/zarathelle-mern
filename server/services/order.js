@@ -5,7 +5,7 @@ const { Product } = require("../models/product");
 
 exports.list = (req, res, next) => {
   Order.find()
-    .populate("items")
+    .populate("items user")
     .then((result) => res.json(result))
     .catch((err) => {
       console.log(err);
@@ -15,7 +15,8 @@ exports.list = (req, res, next) => {
 
 exports.detail = (req, res, next) => {
   Order.findById(req.params.id)
-    .populate("items")
+    .populate({ path: "items", populate: "product" })
+    .populate("user")
     .then((result) => res.json(result))
     .catch((err) => {
       console.log(err);
@@ -25,7 +26,7 @@ exports.detail = (req, res, next) => {
 
 exports.list_user = (req, res, next) => {
   Order.find({ user: req.params.user_id })
-    .populate("items")
+    .populate({ path: "items", populate: "product" })
     .then((result) => res.json(result))
     .catch((err) => {
       console.log(err);
