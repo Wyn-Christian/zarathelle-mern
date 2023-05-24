@@ -16,7 +16,13 @@ import { useEffect } from "react";
 
 const api_base_url = import.meta.env.VITE_SERVER_URI;
 
-const CollectionCard = ({ id, image, title, description }) => (
+const CollectionCard = ({
+  id,
+  image_url,
+  title,
+  description,
+  category,
+}) => (
   <Grid
     xs={12}
     sm={6}
@@ -55,11 +61,14 @@ const CollectionCard = ({ id, image, title, description }) => (
         <CardMedia
           sx={{ height: 200, width: { xs: "100%", md: 200 } }}
           alt="collection sample"
-          image={`${api_base_url}/images/collections/${image}`}
+          image={`${api_base_url}${image_url}`}
         />
         <CardContent>
           <Typography variant="h5" component="div">
             {title}
+          </Typography>
+          <Typography variant="caption" fontWeight="bold" component="div">
+            {category.toUpperCase()}
           </Typography>
           <Typography variant="body2">{description}</Typography>
         </CardContent>
@@ -128,13 +137,7 @@ function Collections() {
         </Typography>
         <Grid container spacing={3} mt={5}>
           {collections.map((collection) => (
-            <CollectionCard
-              key={collection.id}
-              id={collection.id}
-              image={collection.image}
-              title={collection.title}
-              description={collection.description}
-            />
+            <CollectionCard key={collection.id} {...collection} />
           ))}
         </Grid>
       </Container>
