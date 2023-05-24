@@ -20,6 +20,7 @@ import {
 import { api_base_url } from "../../app/base_url";
 import CircularProgress from "@mui/material/CircularProgress";
 import { MuiFileInput } from "mui-file-input";
+import { enqueueSnackbar } from "notistack";
 function Product() {
   const { id } = useParams();
   const {
@@ -38,9 +39,18 @@ function Product() {
 
   const addToCartReadyMade = async () => {
     if (user.id) {
-      await addToCart({ user: user.id, product: product.id });
+      await addToCart({ user: user.id, product: product.id })
+        .unwrap()
+        .then((res) => {
+          enqueueSnackbar("Added to cart successfully!", {
+            variant: "success",
+          });
+        });
     } else {
-      console.log("Please Log in First!");
+      enqueueSnackbar("Please Log in First!", {
+        variant: "warning",
+        preventDuplicate: true,
+      });
     }
   };
 
@@ -61,14 +71,23 @@ function Product() {
         await addToCart(new_cart)
           .unwrap()
           .then((res) => {
-            console.log("Added cart Successfully", res);
+            enqueueSnackbar("Added to cart successfully!", {
+              variant: "success",
+            });
+
             setFile(null);
           });
       } else {
-        console.log("Please upload the file first");
+        enqueueSnackbar("Please upload your custom photo first!", {
+          variant: "warning",
+          preventDuplicate: true,
+        });
       }
     } else {
-      console.log("Please Log in First!");
+      enqueueSnackbar("Please Log in First!", {
+        variant: "warning",
+        preventDuplicate: true,
+      });
     }
   };
 
