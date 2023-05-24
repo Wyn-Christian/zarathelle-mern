@@ -13,6 +13,8 @@ import BorderColorOutlinedIcon from "@mui/icons-material/BorderColorOutlined";
 import { Link, useParams } from "react-router-dom";
 import { useGetProductQuery } from "../../../features/apiSlice";
 import { api_base_url } from "../../../app/base_url";
+import { PHPPrice } from "../../../app/priceFormatter";
+import LoadingProgress from "../../../components/LoadingProgress";
 
 const Title = ({ title }) => (
   <Box>
@@ -46,18 +48,7 @@ function ProductsDetail() {
 
   let content;
   if (isLoading) {
-    content = (
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          height: "40vh",
-        }}
-      >
-        <CircularProgress size={150} />
-      </Box>
-    );
+    content = <LoadingProgress />;
   } else if (isSuccess) {
     content = (
       <Box>
@@ -107,6 +98,7 @@ function ProductsDetail() {
             <Title title="Details" />
             <Info title="Name" value={product.name} />
             <Info title="Description" value={product.description} />
+            <Info title="Price" value={PHPPrice.format(product.price)} />
             <Info title="Collection" value={product.collection_id.title} />
             <Info title="Category" value={product.category} />
             <Info title="Stocks" value={product.stocks} />

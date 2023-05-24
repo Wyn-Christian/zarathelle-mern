@@ -11,6 +11,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useGetProductsQuery } from "../../../features/apiSlice";
 import { api_base_url } from "../../../app/base_url";
+import { PHPPrice } from "../../../app/priceFormatter";
 
 const generateProductData = (num) => ({
   id: num,
@@ -78,8 +79,14 @@ const columns = [
   { field: "name", headerName: "Name", width: 150 },
   { field: "description", headerName: "Description", width: 250 },
   {
+    field: "price",
+    headerName: "Price",
+    width: 100,
+    valueFormatter: (price) => PHPPrice.format(price.value),
+  },
+  {
     field: "category",
-    headerName: "Cateogry",
+    headerName: "Category",
     width: 140,
     renderCell: (params) => <CategoryInfo {...params} />,
   },

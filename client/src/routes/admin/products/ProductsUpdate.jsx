@@ -34,6 +34,7 @@ function ProductsUpdate() {
       description: product.description,
       category: product.category,
       stocks: product.stocks,
+      price: product.price,
 
       collection_id: product.collection_id,
       image: null,
@@ -45,6 +46,7 @@ function ProductsUpdate() {
       name: product?.name,
       description: product?.description,
       category: product?.category,
+      price: product?.price,
       stocks: product?.stocks,
       collection_id: product?.collection_id,
       image: null,
@@ -56,11 +58,13 @@ function ProductsUpdate() {
       formik.values.name !== product.name ||
       formik.values.description !== product.description ||
       formik.values.stocks !== product.stocks ||
+      formik.values.price !== product.price ||
       formik.values.image !== null
     ) {
       const product = new FormData();
       product.append("name", formik.values.name);
       product.append("description", formik.values.description);
+      product.append("price", formik.values.price);
       product.append("stocks", formik.values.stocks);
 
       if (formik.values.image !== null)
@@ -114,6 +118,16 @@ function ProductsUpdate() {
                   value={formik.values.image}
                   onChange={(e) => formik.setFieldValue("image", e)}
                   placeholder={product?.image}
+                />
+              </Grid>
+              <Grid xs={12} md={6}>
+                <TextField
+                  label="Price"
+                  name="price"
+                  type="number"
+                  value={formik.values.price}
+                  onChange={formik.handleChange}
+                  fullWidth
                 />
               </Grid>
               <Grid xs={12} md={6}>

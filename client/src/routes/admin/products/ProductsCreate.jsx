@@ -32,6 +32,7 @@ function ProductsCreate() {
       description: "",
       collection_id: "",
       category: "",
+      price: 100,
       stocks: 1,
       image: null,
     },
@@ -47,12 +48,12 @@ function ProductsCreate() {
   }, [formik.values.collection_id]);
 
   const onSubmit = async () => {
-    console.log(formik.values);
     const new_product = new FormData();
     new_product.append("name", formik.values.name);
     new_product.append("description", formik.values.description);
     new_product.append("collection_id", formik.values.collection_id);
     new_product.append("category", formik.values.category);
+    new_product.append("price", formik.values.price);
     new_product.append("stocks", formik.values.stocks);
     new_product.append("image", formik.values.image);
 
@@ -83,13 +84,14 @@ function ProductsCreate() {
             <Grid xs={12} md={6}>
               <TextField
                 type="number"
-                label="Stocks"
-                name="stocks"
-                value={formik.values.stocks}
+                label="Price"
+                name="price"
+                value={formik.values.price}
                 onChange={formik.handleChange}
                 fullWidth
               />
             </Grid>
+
             <Grid xs={12} md={6}>
               <FormControl fullWidth>
                 <InputLabel id="collectin-id">Collection</InputLabel>
@@ -117,6 +119,16 @@ function ProductsCreate() {
                 onChange={formik.handleChange}
                 fullWidth
                 disabled
+              />
+            </Grid>
+            <Grid xs={12} md={6}>
+              <TextField
+                type="number"
+                label="Stocks"
+                name="stocks"
+                value={formik.values.stocks}
+                onChange={formik.handleChange}
+                fullWidth
               />
             </Grid>
             <Grid xs={12} md={6}>
