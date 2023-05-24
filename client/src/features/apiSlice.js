@@ -99,7 +99,6 @@ export const apiSlice = createApi({
       query: (id) => `/user/${id}`,
       providesTags: (result, error, arg) => [{ type: "User", id: arg }],
     }),
-
     updateUser: builder.mutation({
       query: ({ id, user }) => ({
         url: `/user/${id}/update`,
@@ -108,6 +107,78 @@ export const apiSlice = createApi({
       }),
       invalidatesTags: (result, error, arg) => [
         { type: "User", id: arg.id },
+      ],
+    }),
+
+    // Cart endpoints
+    getCartByUser: builder.query({
+      query: (id) => `/cart-item/user/${id}`,
+      providesTags: (result = [], error, arg) => [
+        "Cart",
+        ...result.map(({ id }) => ({ type: "Cart", id })),
+      ],
+    }),
+    addToCart: builder.mutation({
+      query: (data) => ({
+        url: `/cart-item/create`,
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["Cart"],
+    }),
+    updateCart: builder.mutation({
+      query: ({ id, data }) => ({
+        url: `/cart-item/${id}/update`,
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: (result, error, arg) => [
+        { type: "Cart", id: arg.id },
+      ],
+    }),
+    removeToCart: builder.mutation({
+      query: (id) => ({
+        url: `/cart-item/${id}/delete`,
+        method: "POST",
+      }),
+      invalidatesTags: ["Cart"],
+    }),
+
+    // Order Endpoints
+    getOrders: builder.query({
+      query: () => `/orders`,
+      providesTags: (result = [], error, arg) => [
+        "Order",
+        ...result.map(({ id }) => ({ type: "Order", id })),
+      ],
+    }),
+    getOrder: builder.query({
+      query: (id) => `/order/${id}`,
+      providesTags: (result, error, arg) => [{ type: "Order", id: arg }],
+    }),
+    getOrdersByUser: builder.query({
+      query: (id) => `/order/user/${id}`,
+      providesTags: (result = [], error, arg) => [
+        "Order",
+        ...result.map(({ id }) => ({ type: "Order", id })),
+      ],
+    }),
+    checkoutOrder: builder.mutation({
+      query: (data) => ({
+        url: `/order/checkout`,
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["Cart", "Order"],
+    }),
+    changeStatusOrder: builder.mutation({
+      query: ({ id, data }) => ({
+        url: `/order/${id}/status-change`,
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: (result, error, arg) => [
+        { type: "Order", id: arg.id },
       ],
     }),
   }),
@@ -128,4 +199,13 @@ export const {
   useGetUsersQuery,
   useGetUserQuery,
   useUpdateUserMutation,
+  useGetCartByUserQuery,
+  useAddToCartMutation,
+  useUpdateCartMutation,
+  useRemoveToCartMutation,
+  useGetOrdersQuery,
+  useGetOrderQuery,
+  useGetOrdersByUserQuery,
+  useCheckoutOrderMutation,
+  useChangeStatusOrderMutation,
 } = apiSlice;
