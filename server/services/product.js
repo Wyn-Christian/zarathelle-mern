@@ -21,7 +21,8 @@ exports.detail = (req, res, next) => {
 };
 
 exports.create = (req, res, next) => {
-  const { name, description, category, collection_id, stocks } = req.body;
+  const { name, description, category, collection_id, stocks, price } =
+    req.body;
 
   const new_product = new Product({
     name,
@@ -30,6 +31,7 @@ exports.create = (req, res, next) => {
     category,
     collection_id,
     stocks,
+    price,
   });
 
   new_product
@@ -42,7 +44,7 @@ exports.create = (req, res, next) => {
 };
 
 exports.update = (req, res, next) => {
-  const product = ({ name, description, stocks } = req.body);
+  const product = ({ name, description, stocks, price } = req.body);
 
   if (req.body.collection_id) {
     product.collection_id = req.body.collection_id;
