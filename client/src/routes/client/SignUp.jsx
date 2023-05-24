@@ -12,6 +12,7 @@ import { MuiFileInput } from "mui-file-input";
 import Grid from "@mui/material/Unstable_Grid2";
 import { useSignUpUserMutation } from "../../features/apiSlice";
 import { useNavigate } from "react-router-dom";
+import { enqueueSnackbar } from "notistack";
 
 function SignUp() {
   const navigate = useNavigate();
@@ -32,23 +33,27 @@ function SignUp() {
   });
 
   const onSubmit = async () => {
-    const new_user = new FormData();
-    new_user.append("username", formik.values.username);
-    new_user.append("first_name", formik.values.first_name);
-    new_user.append("last_name", formik.values.last_name);
-    new_user.append("address", formik.values.address);
-    new_user.append("phone", formik.values.phone);
-    new_user.append("email", formik.values.email);
-    new_user.append("password", formik.values.password);
-    new_user.append("image", formik.values.image);
+    if (formik.values.password === formik.values.repassword) {
+      const new_user = new FormData();
+      new_user.append("username", formik.values.username);
+      new_user.append("first_name", formik.values.first_name);
+      new_user.append("last_name", formik.values.last_name);
+      new_user.append("address", formik.values.address);
+      new_user.append("phone", formik.values.phone);
+      new_user.append("email", formik.values.email);
+      new_user.append("password", formik.values.password);
+      new_user.append("image", formik.values.image);
 
-    await signUpUser(new_user)
-      .unwrap()
-      .then((res) => {
-        console.log("Create User Successfully", res);
-        navigate(`/login`);
-      })
-      .catch((err) => console.error(err));
+      await signUpUser(new_user)
+        .unwrap()
+        .then((res) => {
+          console.log("Create User Successfully", res);
+          navigate(`/login`);
+        })
+        .catch((err) => console.error(err));
+    } else {
+      enqueueSnackbar("Password don't match!", { variant: "error" });
+    }
   };
 
   return (
