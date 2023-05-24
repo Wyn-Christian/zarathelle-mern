@@ -12,6 +12,7 @@ import { useLoginUserMutation } from "../../features/apiSlice";
 import { setUser, userSelector } from "../../features/usersSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
+import { enqueueSnackbar } from "notistack";
 
 function Login() {
   const theme = useTheme();
@@ -42,11 +43,16 @@ function Login() {
 
   useEffect(() => {
     if (data) {
-      console.log("use effect");
       if (data.id) {
         dispatch(setUser(data));
+        enqueueSnackbar("Login Successfully", { variant: "success" });
         navigate("/");
       } else {
+        enqueueSnackbar("Wrong input email or password", {
+          variant: "warning",
+          preventDuplicate: true,
+        });
+
         console.log(data.error);
       }
     }
