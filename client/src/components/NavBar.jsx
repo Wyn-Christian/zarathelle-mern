@@ -88,7 +88,7 @@ const ClientNavBar = () => {
     <AppBar>
       <Container>
         <Toolbar>
-          <Box>
+          <Box sx={{ display: { xs: "none", md: "flex" } }}>
             <Link
               to="/"
               style={{
