@@ -31,6 +31,9 @@ import MenuIcon from "@mui/icons-material/Menu";
 import InboxIcon from "@mui/icons-material/MoveToInbox";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { removeUser, userSelector } from "../features/usersSlice";
+import { api_base_url } from "../app/base_url";
+import { useGetCartByUserQuery } from "../features/apiSlice";
+import { enqueueSnackbar } from "notistack";
 
 const NavItemLink = ({ to, title }) => (
   <Box
@@ -44,12 +47,36 @@ const NavItemLink = ({ to, title }) => (
   </Box>
 );
 
+const CartItems = () => {
+  const [totalItems, setTotalItems] = useState(0);
+  const user = useSelector(userSelector);
+  const { data: cart_items = [] } = useGetCartByUserQuery(user.id);
+
+  useEffect(() => {
+    let total_num = cart_items.reduce((total, item) => {
+      return total + item.quantity;
+    }, 0);
+    setTotalItems(total_num);
+  }, [cart_items]);
+
+  return (
+    <Badge badgeContent={totalItems} color="error">
+      <ShoppingCartIcon />
+    </Badge>
+  );
+};
+
 const ClientNavBar = () => {
   const [anchorElUser, setAnchorElUser] = useState(null);
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
   };
   const handleCloseUserMenu = () => {
+    setAnchorElUser(null);
+  };
+  const handleLogout = () => {
+    dispatch(removeUser());
+    enqueueSnackbar("Log out Successfully", { variant: "success" });
     setAnchorElUser(null);
   };
 
@@ -107,9 +134,7 @@ const ClientNavBar = () => {
                 LinkComponent={Link}
                 to="/user/cart-items"
               >
-                <Badge badgeContent={4} color="error">
-                  <ShoppingCartIcon />
-                </Badge>
+                <CartItems />
               </IconButton>
               <Tooltip title="Open settings">
                 <IconButton
@@ -117,8 +142,8 @@ const ClientNavBar = () => {
                   onClick={handleOpenUserMenu}
                 >
                   <Avatar
-                    alt="avatar sample"
-                    src="/images/zarathelle-logo.png"
+                    alt={user.username}
+                    src={`${api_base_url}${user?.image_url}`}
                   />
                 </IconButton>
               </Tooltip>
@@ -164,7 +189,7 @@ const ClientNavBar = () => {
                 <Box
                   component={Link}
                   to="/login"
-                  onClick={() => dispatch(removeUser())}
+                  onClick={handleLogout}
                   sx={{ textDecoration: "none", color: "inherit" }}
                 >
                   <MenuItem onClick={handleCloseUserMenu}>
