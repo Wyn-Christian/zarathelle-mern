@@ -1,14 +1,19 @@
 import {
+  Avatar,
   Box,
   Button,
   CardMedia,
   Chip,
   Paper,
+  Stack,
   Typography,
 } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { useGetOrdersQuery } from "../../../features/apiSlice";
+import { PHPPrice } from "../../../app/priceFormatter";
+import { api_base_url } from "../../../app/base_url";
 
 const generateCollectionData = (num) => ({
   id: num,
@@ -49,40 +54,59 @@ const ViewButton = ({ params }) => {
 };
 
 const StatusInfo = ({ row }) => {
-  if (row.status === "to process") {
-    return <Chip label="To Process" color="warning" />;
-  } else if (row.status === "on its way") {
-    return <Chip label="On Its Way" color="info" />;
-  } else {
-    return <Chip label="Delivered" color="success" />;
+  let content;
+  switch (row.status) {
+    case "to process":
+      content = <Chip label="To Process" color="warning" />;
+      break;
+    case "on its way":
+      content = <Chip label="On Its Way" color="info" />;
+      break;
+    case "delivered":
+      content = <Chip label="Delivered" color="success" />;
+      break;
+    case "cancelled":
+      content = <Chip label="Cancelled" color="error" />;
+      break;
   }
+  return content;
 };
+
+const UserData = ({ row }) => (
+  <Stack direction="row" spacing={1}>
+    <Avatar src={`${api_base_url}${row.user.image_url}`} />
+    <Typography alignSelf="center">{row.user.username}</Typography>
+  </Stack>
+);
 
 const columns = [
   {
     field: "user",
     headerName: "User",
-    width: 100,
+    width: 200,
     headerAlign: "center",
-    // renderCell: (params) => <ImageColumn {...params} />,
+    renderCell: (params) => <UserData {...params} />,
     // format: (user) => user,
-    valueFormatter: (user) => user.value.username,
+    // valueFormatter: (user) => user.value.username,
   },
   {
     field: "total_price",
     headerName: "Total Price",
     type: "number",
     width: 110,
+    valueFormatter: (price) => PHPPrice.format(price.value),
   },
   {
     field: "total_quantity",
     headerName: "Total Quantity",
     type: "number",
     width: 110,
+    valueFormatter: (qty) =>
+      `${qty.value} ${qty.value > 1 ? "items" : "item"}`,
   },
   {
-    field: "category",
-    headerName: "Cateogry",
+    field: "status",
+    headerName: "Status",
     width: 140,
     renderCell: (params) => <StatusInfo {...params} />,
   },
@@ -96,13 +120,14 @@ const columns = [
 ];
 
 function OrdersList() {
+  const { data: orders = [] } = useGetOrdersQuery();
   return (
     <Box>
       <Typography variant="h4">List of Orders</Typography>
       <Box sx={{ mt: 3 }}>
         <DataGrid
           rowHeight={100}
-          rows={collectionSampleData}
+          rows={orders}
           columns={columns}
           pageSizeOptions={[5, 10, 25]}
           initialState={{
