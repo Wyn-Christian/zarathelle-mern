@@ -41,5 +41,8 @@ const UserSchema = new Schema(
 UserSchema.virtual("image_url").get(function () {
   return `/images/users/${this.image}`;
 });
+UserSchema.virtual("full_name").get(function () {
+  return `${this.first_name} ${this.last_name}`;
+});
 
 module.exports = mongoose.model("user", UserSchema);

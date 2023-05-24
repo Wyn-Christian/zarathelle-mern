@@ -15,12 +15,25 @@ const OrderItemSchema = new Schema(
     },
     price: {
       type: mongoose.Types.Decimal128,
+      get: getValue,
       required: true,
     },
     image: String,
   },
   {
     timestamps: true,
+    toJSON: {
+      getters: true,
+    },
   }
 );
+function getValue(value) {
+  if (typeof value !== "undefined") {
+    return parseFloat(value.toString());
+  }
+  return value;
+}
+OrderItemSchema.virtual("image_url").get(function () {
+  return `/images/custom-photos/${this.image}`;
+});
 module.exports = mongoose.model("order-item", OrderItemSchema);

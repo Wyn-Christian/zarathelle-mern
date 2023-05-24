@@ -23,5 +23,8 @@ const CartItemSchema = new Schema(
     timestamps: true,
   }
 );
+CartItemSchema.virtual("image_url").get(function () {
+  return `/images/custom-photos/${this.image}`;
+});
 
 module.exports = mongoose.model("cart-item", CartItemSchema);

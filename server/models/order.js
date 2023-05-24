@@ -22,17 +22,28 @@ const OrderSchema = new Schema(
     },
     total_price: {
       type: mongoose.Types.Decimal128,
+      get: getValue,
       required: true,
     },
     status: {
       type: String,
       required: true,
-      enum: ["to progress", "on its way", "delivered", "cancelled"],
-      default: "in progress",
+      enum: ["to process", "on its way", "delivered", "cancelled"],
+      default: "to process",
     },
   },
   {
     timestamps: true,
+    toJSON: {
+      getters: true,
+    },
   }
 );
+function getValue(value) {
+  if (typeof value !== "undefined") {
+    return parseFloat(value.toString());
+  }
+  return value;
+}
+
 module.exports = mongoose.model("order", OrderSchema);

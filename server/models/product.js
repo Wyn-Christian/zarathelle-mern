@@ -9,6 +9,12 @@ const ProductSchema = new Schema(
     },
     description: String,
     image: String,
+    price: {
+      type: mongoose.Types.Decimal128,
+      required: true,
+      get: getValue,
+      default: 100,
+    },
     category: {
       type: String,
       required: true,
@@ -36,12 +42,20 @@ const ProductSchema = new Schema(
   },
   {
     timestamps: true,
+    toJSON: {
+      getters: true,
+    },
   }
 );
 ProductSchema.virtual("image_url").get(function () {
   return `/images/products/${this.image}`;
 });
-
+function getValue(value) {
+  if (typeof value !== "undefined") {
+    return parseFloat(value.toString());
+  }
+  return value;
+}
 const Product = mongoose.model("product", ProductSchema);
 
 const NumSoldProductSchema = new Schema(
