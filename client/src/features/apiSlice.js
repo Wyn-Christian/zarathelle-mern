@@ -40,6 +40,13 @@ export const apiSlice = createApi({
         { type: "Collection", id: arg.id },
       ],
     }),
+    deleteCollection: builder.mutation({
+      query: (id) => ({
+        url: `/collection/${id}/delete`,
+        method: "POST",
+      }),
+      invalidatesTags: ["Collection", "Product"],
+    }),
 
     // Products endpoints
     getProducts: builder.query({
@@ -70,6 +77,13 @@ export const apiSlice = createApi({
       invalidatesTags: (result, error, arg) => [
         { type: "Product", id: arg.id },
       ],
+    }),
+    deleteProduct: builder.mutation({
+      query: (id) => ({
+        url: `/product/${id}/delete`,
+        method: "POST",
+      }),
+      invalidatesTags: ["Product"],
     }),
 
     // Users endpoints
@@ -194,6 +208,8 @@ export const {
   useCreateProductMutation,
   useUpdateCollectionMutation,
   useUpdateProductMutation,
+  useDeleteCollectionMutation,
+  useDeleteProductMutation,
   useLoginUserMutation,
   useSignUpUserMutation,
   useGetUsersQuery,
