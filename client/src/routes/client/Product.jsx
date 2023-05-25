@@ -109,10 +109,16 @@ function Product() {
     let customButton;
     if (product.category === "ready made") {
       customButton = (
-        <Box display="flex" flexDirection="column">
+        <Box
+          display="flex"
+          flexDirection="column"
+          sx={{ alignItems: { xs: "center", md: "flex-start" } }}
+        >
           <Button
             variant="contained"
-            sx={{ width: 200 }}
+            sx={{
+              width: 200,
+            }}
             onClick={addToCartReadyMade}
           >
             Add to Cart
@@ -154,8 +160,14 @@ function Product() {
             alignItems: { xs: "center", md: "space-between" },
           }}
         >
-          <Box sx={{ width: { xs: 208, md: 368, lg: 418 } }}>
-            <Card>
+          <Box
+            sx={{
+              width: { xs: 208, md: 418, lg: 418 },
+              display: "flex",
+              justifyContent: "flex-end",
+            }}
+          >
+            <Card sx={{ maxWidth: { md: 270, lg: 320 } }}>
               <CardMedia
                 sx={{
                   height: { xs: 190, md: 250, lg: 300 },
@@ -183,10 +195,10 @@ function Product() {
               }}
             >
               <Typography variant="h4" fontWeight="bold">
-                Product Title
+                {product?.name.toUpperCase()}
               </Typography>
               <Typography variant="h6">
-                Type: {product?.category.toUpperCase()}
+                {product?.category.toUpperCase()}
               </Typography>
               <Typography variant="h6">
                 Stocks: {product?.stocks}
