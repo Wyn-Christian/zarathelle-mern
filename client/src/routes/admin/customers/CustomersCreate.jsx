@@ -4,6 +4,7 @@ import { Box, Button, Paper, TextField, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useSignUpUserMutation } from "../../../features/apiSlice";
 import { useFormik } from "formik";
+import { enqueueSnackbar } from "notistack";
 
 function CustomersCreate() {
   const navigate = useNavigate();
@@ -37,8 +38,10 @@ function CustomersCreate() {
     await signUpUser(new_user)
       .unwrap()
       .then((res) => {
-        console.log("Create User Successfully", res);
-        navigate(`/admin/customers`);
+        enqueueSnackbar("Create User Successfully", {
+          variant: "success",
+        });
+        navigate(`/admin/customers/list`);
       })
       .catch((err) => console.error(err));
   };
@@ -51,22 +54,48 @@ function CustomersCreate() {
         <Paper sx={{ p: 3, mt: 3 }} elevation={3}>
           <Grid container spacing={3}>
             <Grid xs={12} md={6}>
-              <TextField label="User Name" name="username" fullWidth />
+              <TextField
+                label="User Name"
+                name="username"
+                value={formik.values.username}
+                onChange={formik.handleChange}
+                fullWidth
+              />
             </Grid>
             <Grid xs={12} md={6}>
-              <TextField label="Email" name="email" fullWidth />
+              <TextField
+                label="Email"
+                name="email"
+                value={formik.values.email}
+                onChange={formik.handleChange}
+                fullWidth
+              />
             </Grid>
             <Grid xs={12} md={6}>
-              <TextField label="First Name" name="first_name" fullWidth />
+              <TextField
+                label="First Name"
+                name="first_name"
+                value={formik.values.first_name}
+                onChange={formik.handleChange}
+                fullWidth
+              />
             </Grid>
             <Grid xs={12} md={6}>
-              <TextField label="Last Name" name="last_name" fullWidth />
+              <TextField
+                label="Last Name"
+                name="last_name"
+                value={formik.values.last_name}
+                onChange={formik.handleChange}
+                fullWidth
+              />
             </Grid>
             <Grid xs={12} md={6}>
               <TextField
                 type="password"
                 label="Password"
                 name="password"
+                value={formik.values.password}
+                onChange={formik.handleChange}
                 fullWidth
               />
             </Grid>
@@ -74,12 +103,20 @@ function CustomersCreate() {
               <TextField
                 type="password"
                 label="Re-enter Password"
-                name="re-password"
+                name="repassword"
+                value={formik.values.repassword}
+                onChange={formik.handleChange}
                 fullWidth
               />
             </Grid>
             <Grid xs={12} md={6}>
-              <TextField label="Phone Number" name="phone" fullWidth />
+              <TextField
+                label="Phone Number"
+                name="phone"
+                value={formik.values.phone}
+                onChange={formik.handleChange}
+                fullWidth
+              />
             </Grid>
             <Grid xs={12} md={6}>
               <MuiFileInput
@@ -93,6 +130,8 @@ function CustomersCreate() {
                 label="Address"
                 rows={3}
                 name="address"
+                value={formik.values.address}
+                onChange={formik.handleChange}
                 fullWidth
                 multiline
               />
