@@ -14,7 +14,6 @@ import Footer from "../../components/Footer";
 import Grid from "@mui/material/Unstable_Grid2";
 import {
   useAddToCartMutation,
-  useGetCartByUserQuery,
   useGetCollectionQuery,
   useGetProductsOfCollectionQuery,
 } from "../../features/apiSlice";
@@ -22,6 +21,7 @@ import { api_base_url } from "../../app/base_url";
 import { useSelector } from "react-redux";
 import { userSelector } from "../../features/usersSlice";
 import { PHPPrice } from "../../app/priceFormatter";
+import { enqueueSnackbar } from "notistack";
 
 const ProductCard = ({
   id,
@@ -39,6 +39,7 @@ const ProductCard = ({
       await addToCart({ user: user.id, product: id });
     } else {
       console.log("Please Log in first!");
+      enqueueSnackbar("Please Log in first!", { variant: "warning" });
     }
   };
 
@@ -104,7 +105,9 @@ const ProductCard = ({
             image={`${api_base_url}${image_url}`}
           />
           <CardContent sx={{ textAlign: "center" }}>
-            <Typography variant="h5">{name}</Typography>
+            <Typography variant="h5" fontWeight="bold">
+              {name}
+            </Typography>
             <Typography variant="body2">{description}</Typography>
           </CardContent>
         </CardActionArea>
@@ -170,24 +173,30 @@ function ProductList() {
               alignItems: { xs: "center", sm: "start" },
             }}
           >
-            <Card
-              elevation={3}
-              sx={{
-                height: { xs: 200, sm: 300 },
-                width: { xs: 200, sm: 300 },
-                m: 1,
-              }}
-            >
-              <CardMedia
-                image={`${api_base_url}${collection.image_url}`}
+            <Box>
+              <Card
+                elevation={3}
                 sx={{
-                  height: { xs: "93%", sm: "95%" },
-
+                  height: { xs: 200, sm: 300 },
+                  width: { xs: 200, sm: 300 },
                   m: 1,
                 }}
-              />
-            </Card>
-            <Box ml={3} mt={4}>
+              >
+                <CardMedia
+                  image={`${api_base_url}${collection.image_url}`}
+                  sx={{
+                    height: { xs: "93%", sm: "95%" },
+
+                    m: 1,
+                  }}
+                />
+              </Card>
+            </Box>
+            <Box
+              ml={3}
+              mt={4}
+              sx={{ textAlign: { xs: "center", sm: "left" } }}
+            >
               <Typography variant="h4">{collection.title}</Typography>
               <Typography variant="caption">
                 {collection.category.toUpperCase()}

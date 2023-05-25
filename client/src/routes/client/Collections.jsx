@@ -58,14 +58,19 @@ const CollectionCard = ({
           alignContent: "space-between",
         }}
       >
-        <CardMedia
-          sx={{ height: 200, width: { xs: "100%", md: 200 } }}
-          alt="collection sample"
-          image={`${api_base_url}${image_url}`}
-        />
-        <CardContent>
-          <Typography variant="h5" component="div">
-            {title}
+        <sBox>
+          <CardMedia
+            sx={{
+              height: { xs: 300, md: 200 },
+              width: { xs: "100%", md: 200 },
+            }}
+            alt="collection sample"
+            image={`${api_base_url}${image_url}`}
+          />
+        </sBox>
+        <CardContent sx={{ textAlign: { xs: "center", md: "left" } }}>
+          <Typography variant="h6" component="div" fontWeight="bold">
+            {title.toUpperCase()}
           </Typography>
           <Typography variant="caption" fontWeight="bold" component="div">
             {category.toUpperCase()}
@@ -74,7 +79,13 @@ const CollectionCard = ({
         </CardContent>
       </Box>
 
-      <CardActions sx={{ m: { xs: "auto", md: "0px 15px" } }}>
+      <CardActions
+        sx={{
+          m: { xs: "auto", md: "0px 15px" },
+          width: { md: 300 },
+          justifyContent: { md: "flex-end" },
+        }}
+      >
         <Button
           size="small"
           variant="outlined"

@@ -121,7 +121,11 @@ function Product() {
       );
     } else {
       customButton = (
-        <Box display="flex" flexDirection="column">
+        <Box
+          display="flex"
+          flexDirection="column"
+          sx={{ alignItems: { xs: "center", md: "flex-start" } }}
+        >
           <MuiFileInput
             value={file}
             onChange={handleFileChange}
@@ -133,7 +137,7 @@ function Product() {
             sx={{ width: 200 }}
             onClick={addToCartCustomizable}
           >
-            Add to Cart yeahh
+            Add to Cart
           </Button>
         </Box>
       );
@@ -150,16 +154,18 @@ function Product() {
             alignItems: { xs: "center", md: "space-between" },
           }}
         >
-          <Card sx={{ width: { xs: 208, md: 418 } }}>
-            <CardMedia
-              sx={{
-                height: { xs: 190, md: 400 },
-                width: { xs: 190, md: 400 },
-                m: 1.1,
-              }}
-              image={`${api_base_url}${product?.image_url}`}
-            />
-          </Card>
+          <Box sx={{ width: { xs: 208, md: 368, lg: 418 } }}>
+            <Card>
+              <CardMedia
+                sx={{
+                  height: { xs: 190, md: 250, lg: 300 },
+                  width: { xs: 190, md: 250, lg: 300 },
+                  m: 1.1,
+                }}
+                image={`${api_base_url}${product?.image_url}`}
+              />
+            </Card>
+          </Box>
           <Box
             sx={{
               ml: { md: 4 },
