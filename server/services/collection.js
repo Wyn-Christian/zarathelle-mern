@@ -72,7 +72,13 @@ exports.update = (req, res, next) => {
 
 exports.delete = (req, res, next) => {
   Collection.findByIdAndDelete(req.params.id)
-    .then((result) => res.json(result))
+    .then(async (result) => {
+      let product_deleted = await Product.deleteMany({
+        collection_id: req.params.id,
+      });
+      console.log(`Deleted ${product_deleted.length} documents`);
+      res.json(result);
+    })
     .catch((err) => {
       console.log(err);
       next(err);
