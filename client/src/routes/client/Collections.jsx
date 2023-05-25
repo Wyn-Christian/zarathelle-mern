@@ -58,7 +58,7 @@ const CollectionCard = ({
           alignContent: "space-between",
         }}
       >
-        <sBox>
+        <Box>
           <CardMedia
             sx={{
               height: { xs: 300, md: 200 },
@@ -67,7 +67,7 @@ const CollectionCard = ({
             alt="collection sample"
             image={`${api_base_url}${image_url}`}
           />
-        </sBox>
+        </Box>
         <CardContent sx={{ textAlign: { xs: "center", md: "left" } }}>
           <Typography variant="h6" component="div" fontWeight="bold">
             {title.toUpperCase()}
