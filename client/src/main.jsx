@@ -11,7 +11,7 @@ import { SnackbarProvider } from "notistack";
 // Components routes
 import ErrorPage from "./routes/ErrorPage.jsx";
 import Root from "./routes/Root.jsx";
-import { ThemeProvider } from "@mui/material";
+import { ThemeProvider } from "@mui/material/styles";
 import Home from "./routes/client/Home.jsx";
 import Collections from "./routes/client/Collections.jsx";
 import Login from "./routes/client/Login.jsx";
