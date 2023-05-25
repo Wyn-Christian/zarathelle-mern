@@ -30,15 +30,6 @@ function Login() {
   const onSubmit = async () => {
     console.log(formik.values);
     await loginUser(formik.values);
-    // if (isSuccess) {
-    //   if (data.id) {
-    //     console.log("success", data);
-    //     dispatch(setUser(data));
-    //     console.log("user redux", user);
-    //   } else {
-    //     console.log(data.error);
-    //   }
-    // }
   };
 
   useEffect(() => {
@@ -85,7 +76,7 @@ function Login() {
           sx={{
             zIndex: 1,
             ml: { xs: 0, md: 40, lg: "30%", xl: "50%" },
-            width: { xs: "70%", md: 500 },
+            width: { xs: "95%", sm: 500 },
           }}
         >
           <Paper sx={{ p: 4 }}>
