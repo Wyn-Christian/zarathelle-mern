@@ -106,7 +106,7 @@ const ProductCard = ({
           />
           <CardContent sx={{ textAlign: "center" }}>
             <Typography variant="h5" fontWeight="bold">
-              {name}
+              {name.toUpperCase()}
             </Typography>
             <Typography variant="body2">{description}</Typography>
           </CardContent>
@@ -197,7 +197,9 @@ function ProductList() {
               mt={4}
               sx={{ textAlign: { xs: "center", sm: "left" } }}
             >
-              <Typography variant="h4">{collection.title}</Typography>
+              <Typography variant="h4" fontWeight="bold">
+                {collection.title.toUpperCase()}
+              </Typography>
               <Typography variant="caption">
                 {collection.category.toUpperCase()}
               </Typography>
