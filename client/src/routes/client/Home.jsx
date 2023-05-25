@@ -33,7 +33,7 @@ const CollectionCard = ({ id, image_url, name, description, price }) => {
       >
         <Box>
           <CardMedia
-            sx={{ height: 200 }}
+            sx={{ height: 300 }}
             alt={name}
             image={`${api_base_url}${image_url}`}
           />
@@ -72,11 +72,7 @@ const CollectionCard = ({ id, image_url, name, description, price }) => {
 };
 
 function Home() {
-  const {
-    data: products = [],
-    isLoading,
-    isSuccess,
-  } = useGetProductsQuery();
+  const { data: products = [], isLoading, isSuccess } = useGetProductsQuery();
 
   let content;
   if (isLoading) {
@@ -120,7 +116,7 @@ function Home() {
           },
         }}
       >
-        <Box sx={{ zIndex: 1, textAlign: "center", pt: 10 }}>
+        <Box sx={{ zIndex: 1, textAlign: "center", pt: 30 }}>
           <Typography
             variant="h2"
             sx={{
