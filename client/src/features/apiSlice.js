@@ -195,6 +195,10 @@ export const apiSlice = createApi({
         { type: "Order", id: arg.id },
       ],
     }),
+    getCountsList: builder.query({
+      query: () => `/counts`,
+      providesTags: ["Collection", "Product", "User"],
+    }),
   }),
 });
 
@@ -224,4 +228,5 @@ export const {
   useGetOrdersByUserQuery,
   useCheckoutOrderMutation,
   useChangeStatusOrderMutation,
+  useGetCountsListQuery,
 } = apiSlice;

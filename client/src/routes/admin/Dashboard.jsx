@@ -5,6 +5,8 @@ import PermIdentityIcon from "@mui/icons-material/PermIdentity";
 import CategoryIcon from "@mui/icons-material/Category";
 import PixIcon from "@mui/icons-material/Pix";
 import LocalShippingIcon from "@mui/icons-material/LocalShipping";
+import { useGetCountsListQuery } from "../../features/apiSlice";
+import LoadingProgress from "../../components/LoadingProgress";
 const DataSummary = ({ title, num, Icon }) => {
   const theme = useTheme();
   return (
@@ -28,19 +30,46 @@ const DataSummary = ({ title, num, Icon }) => {
 };
 
 function Dashboard() {
-  return (
-    <Box>
-      <Typography variant="h4">Dashboard</Typography>
+  const {
+    data: count_list = {},
+    isSuccess,
+    isLoading,
+  } = useGetCountsListQuery();
+
+  let content;
+  if (isLoading) {
+    content = <LoadingProgress />;
+  } else if (isSuccess) {
+    content = (
       <Grid container spacing={3} sx={{ mt: 3 }}>
-        <DataSummary title="Customers" num={10} Icon={PermIdentityIcon} />
-        <DataSummary title="Collections" num={4} Icon={CategoryIcon} />
-        <DataSummary title="Products" num={12} Icon={PixIcon} />
+        <DataSummary
+          title="Customers"
+          num={count_list.users}
+          Icon={PermIdentityIcon}
+        />
+        <DataSummary
+          title="Collections"
+          num={count_list.collections}
+          Icon={CategoryIcon}
+        />
+        <DataSummary
+          title="Products"
+          num={count_list.products}
+          Icon={PixIcon}
+        />
         <DataSummary
           title="Pending Orders"
-          num={51}
+          num={count_list.pending_orders}
           Icon={LocalShippingIcon}
         />
       </Grid>
+    );
+  }
+
+  return (
+    <Box>
+      <Typography variant="h4">Dashboard</Typography>
+      {content}
     </Box>
   );
 }
