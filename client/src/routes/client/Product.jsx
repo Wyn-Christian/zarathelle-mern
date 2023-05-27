@@ -23,11 +23,7 @@ import { MuiFileInput } from "mui-file-input";
 import { enqueueSnackbar } from "notistack";
 function Product() {
   const { id } = useParams();
-  const {
-    data: product = {},
-    isLoading,
-    isSuccess,
-  } = useGetProductQuery(id);
+  const { data: product = {}, isLoading, isSuccess } = useGetProductQuery(id);
   const user = useSelector(userSelector);
   const [addToCart] = useAddToCartMutation(user.id);
 
@@ -200,12 +196,9 @@ function Product() {
               <Typography variant="h6">
                 {product?.category.toUpperCase()}
               </Typography>
-              <Typography variant="h6">
-                Stocks: {product?.stocks}
-              </Typography>
-              <Typography variant="body2">
-                {product?.description}
-              </Typography>
+              <Typography variant="h6">Stocks: {product?.stocks}</Typography>
+              <Typography variant="h6">Sold: {product?.num_sold}</Typography>
+              <Typography variant="body2">{product?.description}</Typography>
             </Box>
             {customButton}
           </Box>
