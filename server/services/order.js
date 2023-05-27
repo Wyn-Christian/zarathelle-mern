@@ -26,6 +26,7 @@ exports.detail = (req, res, next) => {
 
 exports.list_user = (req, res, next) => {
   Order.find({ user: req.params.user_id })
+    .sort({ createdAt: -1 })
     .populate({ path: "items", populate: "product" })
     .then((result) => res.json(result))
     .catch((err) => {
