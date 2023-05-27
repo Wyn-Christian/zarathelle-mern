@@ -120,4 +120,6 @@ router.get("/", function (req, res, next) {
   res.json({ message: "This is the index route of the server" });
 });
 
+router.get("/counts", product_services.count_list);
+
 module.exports = router;

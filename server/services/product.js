@@ -1,4 +1,7 @@
 const { Product } = require("../models/product");
+const Collection = require("../models/collection");
+const User = require("../models/user");
+const Order = require("../models/order");
 
 exports.list = (req, res, next) => {
   Product.find()
@@ -71,4 +74,13 @@ exports.delete = (req, res, next) => {
       console.log(err);
       next(err);
     });
+};
+
+exports.count_list = async (req, res, next) => {
+  let products = await Product.count();
+  let collections = await Collection.count();
+  let users = await User.find({ position: "user" }).count();
+  let pending_orders = await Order.find({ status: "to process" }).count();
+
+  res.json({ products, collections, users, pending_orders });
 };
