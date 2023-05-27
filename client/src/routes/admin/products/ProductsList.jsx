@@ -48,14 +48,13 @@ const ImageColumn = ({ row }) => {
 
 const ViewButton = ({ params }) => {
   return (
-    <Button variant="contained" sx={{ m: "auto" }}>
-      <Box
-        component={Link}
-        to={`/admin/products/${params.id}`}
-        sx={{ textDecoration: "none", color: "inherit" }}
-      >
-        View
-      </Box>
+    <Button
+      LinkComponent={Link}
+      to={`/admin/products/${params.id}`}
+      variant="contained"
+      sx={{ m: "auto" }}
+    >
+      View
     </Button>
   );
 };

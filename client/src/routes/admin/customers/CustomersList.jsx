@@ -40,14 +40,13 @@ const ImageColumn = ({ row }) => {
 };
 const CountButton = ({ params }) => {
   return (
-    <Button variant="contained" sx={{ m: "auto" }}>
-      <Box
-        component={Link}
-        to={`/admin/customers/${params.id}`}
-        sx={{ textDecoration: "none", color: "inherit" }}
-      >
-        View
-      </Box>
+    <Button
+      LinkComponent={Link}
+      to={`/admin/customers/${params.id}`}
+      variant="contained"
+      sx={{ m: "auto" }}
+    >
+      View
     </Button>
   );
 };
