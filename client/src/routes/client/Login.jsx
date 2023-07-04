@@ -36,8 +36,8 @@ function Login() {
 		if (data) {
 			if (data.id) {
 				enqueueSnackbar("Login Successfully", { variant: "success" });
+				dispatch(setUser(data));
 				if (data.position == "user") {
-					dispatch(setUser(data));
 					navigate("/");
 				} else navigate("/admin");
 			} else {
