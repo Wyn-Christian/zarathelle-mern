@@ -1,14 +1,14 @@
-import { createTheme, responsiveFontSizes } from "@mui/material";
+import { createTheme, responsiveFontSizes } from "@mui/material/styles";
 
 let theme = createTheme({
-  palette: {
-    primary: {
-      main: "#fbd5d5",
-    },
-    secondary: {
-      main: "#e78686",
-    },
-  },
+	palette: {
+		primary: {
+			main: "#fbd5d5",
+		},
+		secondary: {
+			main: "#e78686",
+		},
+	},
 });
 
 theme = responsiveFontSizes(theme);
