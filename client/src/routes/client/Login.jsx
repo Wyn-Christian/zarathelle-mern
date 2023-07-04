@@ -35,10 +35,11 @@ function Login() {
 	useEffect(() => {
 		if (data) {
 			if (data.id) {
-				dispatch(setUser(data));
 				enqueueSnackbar("Login Successfully", { variant: "success" });
-				if (data.position == "user") navigate("/");
-				else navigate("/admin");
+				if (data.position == "user") {
+					dispatch(setUser(data));
+					navigate("/");
+				} else navigate("/admin");
 			} else {
 				enqueueSnackbar("Wrong input email or password", {
 					variant: "warning",
