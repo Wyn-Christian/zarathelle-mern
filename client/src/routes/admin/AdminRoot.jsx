@@ -1,9 +1,9 @@
 import { Box, Toolbar } from "@mui/material";
 import { Outlet, useNavigate } from "react-router-dom";
-import AdminNavBar from "../../components/AdminNavbar";
 import { useSelector } from "react-redux";
 import { userSelector } from "../../features/usersSlice";
 import { useEffect } from "react";
+// import AdminNavBar from "../../components/AdminNavbar";
 
 const drawerWidth = 240;
 
@@ -17,7 +17,7 @@ function AdminRoot() {
 	}, [user]);
 	return (
 		<Box display="flex">
-			<AdminNavBar />
+			{/* <AdminNavBar /> */}
 			<Box
 				component="main"
 				sx={{
