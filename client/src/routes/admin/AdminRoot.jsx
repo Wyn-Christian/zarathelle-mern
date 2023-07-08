@@ -3,7 +3,8 @@ import { Outlet, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { userSelector } from "../../features/usersSlice";
 import { useEffect } from "react";
-// import AdminNavBar from "../../components/AdminNavbar";
+
+import AdminNavBar from "../../components/AdminNavBar";
 
 const drawerWidth = 240;
 
@@ -17,7 +18,7 @@ function AdminRoot() {
 	}, [user]);
 	return (
 		<Box display="flex">
-			{/* <AdminNavBar /> */}
+			<AdminNavBar />
 			<Box
 				component="main"
 				sx={{
