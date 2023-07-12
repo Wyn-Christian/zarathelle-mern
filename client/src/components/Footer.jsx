@@ -42,14 +42,7 @@ function Footer() {
 					to="https://www.facebook.com/zarathelle.ph?mibextid=ZbWKwL"
 					target="_blank"
 				>
-					<FacebookIcon
-						sx={{ color: "black" }}
-						onClick={() =>
-							window.open(
-								" https://www.facebook.com/zarathelle.ph?mibextid=ZbWKwL"
-							)
-						}
-					/>
+					<FacebookIcon sx={{ color: "black" }} />
 				</IconButton>
 				<IconButton
 					LinkComponent={Link}
