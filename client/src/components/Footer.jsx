@@ -37,7 +37,10 @@ function Footer() {
       </Typography>
       <Box>
         <IconButton>
-          <FacebookIcon sx={{ color: "black" }} />
+          <FacebookIcon 
+          sx={{ color: "black" }} 
+          onClick={() => window.open(' https://www.facebook.com/zarathelle.ph?mibextid=ZbWKwL')}
+          />
         </IconButton>
         <IconButton>
           <InstagramIcon sx={{ color: "black" }} />
